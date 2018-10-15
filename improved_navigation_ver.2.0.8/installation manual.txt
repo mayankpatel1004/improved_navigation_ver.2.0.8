@@ -1,0 +1,128 @@
+If you will need support, please contact us via http://amasty.com/support.html
+
+Before installing the extension please create full back up of your site (both files and database).
+
+To install the extension please do the following:
+
+1) !!!VERY IMPORTANT!!! go to admin panel -> System -> Tools -> Compilation and make sure that Compiler Status is disabled. If it's not, please change it to disabled. If you plan to use the compilation after installing the extension, please click 'Run Compilation Process' button after you complete the extension installation.
+
+2) copy files from 'Step1' folder to the magento root folder
+
+3) copy files from 'Step2' folder to the magento root folder
+
+4) log in as admin and refresh the cache (System > Cache Management)
+
+5) Go to edit each category, where you would like to display improved navigation and set 'Is anchor' option to 'Yes. The setting is located at the 'Display Settings' tab.
+
+6) log out of admin panel and log in back, this is needed for Magento to refresh access permissions for configuration pages.
+
+
+----- Installation is now complete.
+
+
+--- IMPORTANT ---
+
+Before doing modifications to template files please create backups of the templates.
+
+
+
+----- To enable AJAX mode please open
+
+app\design\frontend\YourThemePackage\YourTheme\template\catalog\product\list.phtml file
+
+and add
+
+<div class="amshopby-page-container">
+
+at the top of the file
+
+and 
+
+<div style="display:none" class="amshopby-overlay"><img src="<?php echo $this->getSkinUrl('images/amshopby-overlay.gif')?>" width="32" height="32"/></div>
+</div>
+
+at the bottom.
+
+If there is no file catalog\product\list.phtml in your theme, please use the one from \default\default\ and \base\default
+
+
+You may also enable template hints to check the file location (as some other extensions may change it).
+
+After you've modified the file please go to admin panel -> System -> Configuration -> Improved Navigation and set 'Enable AJAX' option to 'Yes'.
+
+
+
+----- If you would like to add the layered navigation to the homepage, please do the following: 
+
+1) Open your home page in admin area (CMS > Pages)
+2) switch to the "Design" tab
+3) set layout "2 columns with left sidebar"
+4) paste these lines:
+        <reference name="left">
+                      <block type="catalog/layer_view" name="amshopby.navleft" after="currency" template="catalog/layer/view.phtml"/> 
+        </reference>
+into Layout Update XML
+
+Please be aware that some or all of the existing Layout Update XML may be surrounded by the comment tags '<!--' and '-->'. If so, be sure that you paste the above lines outside of the comment pair.
+
+5) save the page
+6) set "is anchor" to "yes" for root category
+
+7) If you want to show horizontal navigation at the home page, add cms block to the content area
+ {{block type="amshopby/catalog_layer_view_top" name="amshopby.navtop" template="amshopby/view_top.phtml" }}
+
+8) if you want to use AJAX at the page, wrap the products area as below:
+
+<div class="amshopby-page-container">
+....
+any content here
+.....
+<div style="display:none" class="amshopby-overlay"><img src="{{skin url='images/amshopby-overlay.gif''}}" width="32" height="32"/></div>
+</div>
+
+ADVANCED (not necessary in most cases):
+9) If you use custom JavaScripts which modify product list page, and the scripts need initialization,
+please add initialization to the skin\frontend\default\default\js\amshopby-ajax.js file, in function amshopby_external
+
+10) If AJAX does not work for sorting and pager it means the div has a CSS selector that differs from "div.toolbar" 
+please set this class in the file skin\frontend\default\default\js\amshopby-ajax.js file
+
+
+
+
+------- TROUBLESHOOTING -------
+
+If the extension does not work after installation, this is most likely related to the custom design theme/skin you are using.
+To fix this, please try the following:
+
+1. Copy templates folder of the extension app\design\frontend\default\default\template\amshopby\ and all files
+within the folder to the theme you are using, for example:
+app\design\frontend\YourThemePackage\YourTheme\template\amshopby\
+
+2. Copy file app\design\frontend\default\default\layout\amshopby.xml to your theme folder, for example:
+app\design\frontend\YourThemePackage\YourTheme\layout\amshopby.xml 
+
+3. Copy skin\frontend\default\default\js\amshopby.js file to your custom skin:
+skin\frontend\YourSkinPackage\YourSkin\js\amshopby.js 
+
+4. If the above steps don't help, please contct us using http://amasty.com/support.html with description 
+of the issue(s) and access information.
+
+
+
+
+------- If you will have any issues with the extension, please disable the extension the following way: --------
+
+1. Undo the modifications you did to your files according to this manual and user guide.
+
+2. Open file app/etc/modules/Amasty_Shopby.xml, find this line of code:
+
+<active>true</active>
+
+and change it to:
+
+<active>false</active>
+
+
+After that please contact us via http://amasty.com/support.html with description of the issue(s) and access information.
+
